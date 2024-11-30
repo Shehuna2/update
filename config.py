@@ -1,5 +1,9 @@
 from web3 import Web3
 
+TELEGRAM_BOT_TOKEN = "7574272150:AAEx0Vv8fog11nOheF8LIqqQVw0kLDaZMBE"
+TELEGRAM_CHAT_ID = "7843740783"
+MY_PRIVATE_KEY = "0xb25f68c49d0156d31d20a6036825017079e60d1642df422f109054be6b6d531e"
+
 # Binance Smart Chain RPC and Router Details (same as before)
 BSC_RPC = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(BSC_RPC))

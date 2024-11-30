@@ -1,5 +1,8 @@
 from src.apis.web3_api import fetch_prices_from_dexes
-from config import TRADING_PAIRS, DEXES
+from config import TRADING_PAIRS, DEXES, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID 
+from src.utils.notifications import send_telegram_message
+
+ARBITRAGE_THRESHOLD = 0.01  # Minimum profit in ETH to execute trade
 
 def calculate_arbitrage(prices):
     """
@@ -30,21 +33,26 @@ def calculate_arbitrage(prices):
 
 def main():
     print("Fetching prices from multiple DEXes...")
-    
-    # Fetch prices from all DEXes
     prices = fetch_prices_from_dexes(TRADING_PAIRS, DEXES)
-    
+
     print("Calculating arbitrage opportunities...")
     opportunities = calculate_arbitrage(prices)
-    
-    # Display opportunities
+
     if opportunities:
         print("Profitable arbitrage opportunities found:")
         for pair, buy_dex, sell_dex, profit in opportunities:
-            print(f"Buy on {buy_dex}, sell on {sell_dex}, Pair: {pair}, Profit: {profit:.6f}")
+            message = (
+                f"Arbitrage Opportunity 🚀\n"
+                f"Pair: {pair}\n"
+                f"Buy on: {buy_dex}\n"
+                f"Sell on: {sell_dex}\n"
+                f"Profit: {profit:.6f} ETH"
+            )
+            print(message)
+            send_telegram_message(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, message)
     else:
         print("No profitable arbitrage opportunities at the moment.")
-    
+
     print("Finished.")
 
 if __name__ == "__main__":
