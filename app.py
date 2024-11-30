@@ -1,19 +1,21 @@
-from src.apis.dex_api import fetch_uniswap_prices
-from src.arbitrage.detector import find_arbitrage_opportunities
+from src.apis.web3_api import get_token_price, WBNB, USDT
+from web3 import Web3
 
 def main():
-    print("Fetching prices from Uniswap...")
-    prices = fetch_uniswap_prices()
-    print("Prices:", prices)
-
-    print("\nDetecting arbitrage opportunities...")
-    opportunities = find_arbitrage_opportunities(prices)
-    if opportunities:
-        print("Arbitrage Opportunities Found:")
-        for opp in opportunities:
-            print(f"Buy: {opp['buy']}, Sell: {opp['sell']}, Profit: {opp['profit']:.4f}")
+    print("Fetching token price for WBNB -> USDT...")
+    
+    # Set input amount (e.g., 1 WBNB in wei)
+    amount_in_wei = Web3.to_wei(1, "ether")
+    
+    # Define the swap path
+    path = [WBNB, USDT]
+    
+    # Fetch and display the price
+    price = get_token_price(amount_in_wei, path)
+    if price:
+        print(f"1 WBNB = {price} USDT")
     else:
-        print("No arbitrage opportunities found.")
+        print("Failed to fetch token price.")
 
 if __name__ == "__main__":
     main()
