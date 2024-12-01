@@ -1,10 +1,13 @@
+import os
+from dotenv import load_dotenv
 from web3 import Web3
 
+load_dotenv()
 TELEGRAM_BOT_TOKEN = "7574272150:AAEx0Vv8fog11nOheF8LIqqQVw0kLDaZMBE"
 TELEGRAM_CHAT_ID = "7843740783"
-MY_PRIVATE_KEY = "0xb25f68c49d0156d31d20a6036825017079e60d1642df422f109054be6b6d531e"
+MY_PRIVATE_KEY = os.getenv('MY_PRIVATE_KEY')
 
-# Binance Smart Chain RPC and Router Details (same as before)
+# Binance Smart Chain RPC and pancakeswap Router Details
 BSC_RPC = "https://bsc-dataseed.binance.org/"
 web3 = Web3(Web3.HTTPProvider(BSC_RPC))
 ROUTER_ADDRESS = Web3.to_checksum_address("0x10ED43C718714eb63d5aA57B78B54704E256024E")
